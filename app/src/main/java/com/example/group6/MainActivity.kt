@@ -1,7 +1,14 @@
 package com.example.group6
 
 import android.os.Bundle
+import android.text.TextUtils
+import android.widget.*
 import androidx.activity.ComponentActivity
+import android.view.View
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.ktx.auth
+import android.content.Intent
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -13,34 +20,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.group6.ui.theme.Group6Theme
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            Group6Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+
+//        BELOW IS DEFAULT
+
+        setContentView(R.layout.activity_main)
+
+        auth = Firebase.auth
+        var LogOutButton = findViewById<Button>(R.id.LogOutButton)
+        var LoggedInText = findViewById<TextView>(R.id.LoggedInText)
+
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            val intent = Intent(applicationContext, Login::class.java)
+            startActivity(intent)
+            finish()
         }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Group6Theme {
-        Greeting("Android")
+        LogOutButton.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(applicationContext, Login::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }
