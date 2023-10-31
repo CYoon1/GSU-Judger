@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,7 +17,63 @@
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Group6">
+        </activity>
+
+        <activity
+            android:name=".EventListener"
             android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat">
+        </activity>
+
+        <activity
+            android:name=".Event"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Group6">
+        </activity>
+
+        <activity
+            android:name=".ShowEvent"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Group6">
+        </activity>
+
+        <activity
+            android:name=".EventAdapter"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Group6">
+        </activity>
+
+        <activity
+            android:name=".AddEvent"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Group6">
+        </activity>
+
+        <activity
+            android:name=".AddProject"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Group6">
+        </activity>
+
+        <activity
+            android:name=".Project"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Group6">
+        </activity>
+
+        <activity
+            android:name=".ProjectAdapter"
+            android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.Group6">
         </activity>

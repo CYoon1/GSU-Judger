@@ -66,13 +66,13 @@
     />
     
 <!--    CLICK TO LOGIN-->
-    <TextView
+    <Button
         android:id="@+id/Click2Login"
-        android:text="Click here to login"
+        android:text="Already Registered? Login Here!"
+        android:layout_width="400dp"
+        android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:textColor="@color/black"
     />
     
 </LinearLayout>

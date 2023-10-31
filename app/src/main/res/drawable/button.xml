@@ -1,0 +1,32 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval" >
+    <solid android:color="#0033A0" />
+    <stroke android:width="5dp" android:color="#CE142D"/>
+
+</shape>
+
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="line">-->
+<!--<stroke android:width="100dp" android:color="#000000"/>-->
+<!--<size android:height="50dp" />-->
+<!--</shape>-->
+
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--    <item>-->
+<!--        <shape android:shape="oval">-->
+<!--            <solid android:color="#0033A0" />-->
+<!--            <stroke android:width="5dp" android:color="#CE142D"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item android:top="1dp" android:left="1dp" android:right="1dp" android:bottom="1dp">-->
+<!--        <shape android:shape="line">-->
+<!--            <solid android:color="#CE142D"/>-->
+<!--            <stroke android:width="10dp"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item android:top="1dp" android:left="1dp" android:right="1dp" android:bottom="1dp">-->
+<!--        <shape android:shape="line">-->
+<!--            <solid android:color="#CE142D"/>-->
+<!--            <stroke android:height="10dp"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--</layer-list>-->

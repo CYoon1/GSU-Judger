@@ -27,7 +27,7 @@ class Login: ComponentActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val intent = Intent(applicationContext, MainActivity::class.java)
+            val intent = Intent(applicationContext, EventListener::class.java)
             startActivity(intent)
             finish()
         }
@@ -75,7 +75,7 @@ class Login: ComponentActivity() {
                     if (task.isSuccessful) {
 
                         Toast.makeText(this@Login, "Login success.", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(applicationContext, MainActivity::class.java)
+                        val intent = Intent(applicationContext, EventListener::class.java)
                         startActivity(intent)
                         finish()
                         // Sign in success, update UI with the signed-in user's information

@@ -27,7 +27,7 @@ class Registration: ComponentActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val intent = Intent(applicationContext, MainActivity::class.java)
+            val intent = Intent(applicationContext, EventListener::class.java)
             startActivity(intent)
             finish()
         }
@@ -45,7 +45,7 @@ class Registration: ComponentActivity() {
         var EnterPassword = findViewById<EditText>(R.id.Password_Textbox)
         var RegisterButton = findViewById<Button>(R.id.Register_Button)
         var ProgressBar = findViewById<ProgressBar>(R.id.ProgressBar)
-        var Click2Login = findViewById<TextView>(R.id.Click2Login)
+        var Click2Login = findViewById<Button>(R.id.Click2Login)
 
 
         Click2Login.setOnClickListener {
@@ -77,6 +77,11 @@ class Registration: ComponentActivity() {
                             Toast.makeText(this@Registration, "Account created.", Toast.LENGTH_SHORT).show()
 //                            val user = auth.currentUser
 //                            updateUI(user)
+
+                            val intent = Intent(applicationContext, EventListener::class.java)
+                            startActivity(intent)
+                            finish()
+
                         } else {
                             Toast.makeText(this@Registration, "Authentication failed.", Toast.LENGTH_SHORT,).show()
 //                            updateUI(null)
