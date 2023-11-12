@@ -62,10 +62,14 @@ class Login: ComponentActivity() {
 
             if (TextUtils.isEmpty(email)){
                 Toast.makeText(this@Login, "Email is empty", Toast.LENGTH_SHORT).show()
+                val intent = Intent(applicationContext, Login::class.java)
+                startActivity(intent)
             }
 
             if (TextUtils.isEmpty(password)){
                 Toast.makeText(this@Login, "Password is empty", Toast.LENGTH_SHORT).show()
+                val intent = Intent(applicationContext, Login::class.java)
+                startActivity(intent)
             }
 
             auth.signInWithEmailAndPassword(email, password)

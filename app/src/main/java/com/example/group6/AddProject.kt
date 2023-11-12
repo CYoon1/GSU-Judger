@@ -46,7 +46,7 @@ class AddProject : ComponentActivity(){
         }
 
         backBtn.setOnClickListener{
-            val intent = Intent(applicationContext, ShowEvent::class.java)
+            val intent = Intent(applicationContext, EventListener::class.java)
             startActivity(intent)
             finish()
         }

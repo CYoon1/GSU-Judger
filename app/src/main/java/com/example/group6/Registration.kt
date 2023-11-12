@@ -64,10 +64,15 @@ class Registration: ComponentActivity() {
 
                 if (TextUtils.isEmpty(email)){
                     Toast.makeText(this@Registration, "Email is empty", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(applicationContext, Registration::class.java)
+                    startActivity(intent)
+
                 }
 
                 if (TextUtils.isEmpty(password)){
-                    Toast.makeText(this@Registration, "Email is empty", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Registration, "Password is empty", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(applicationContext, Registration::class.java)
+                    startActivity(intent)
                 }
 
                 auth.createUserWithEmailAndPassword(email, password)

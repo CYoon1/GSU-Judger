@@ -1,6 +1,7 @@
 package com.example.group6
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.icu.text.CaseMap.Title
 import android.os.Bundle
@@ -17,10 +18,16 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import android.util.Log
 import android.content.ContentValues.TAG
-
-class AddEvent: ComponentActivity() {
+import android.widget.DatePicker
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import java.util.Date
+class AddEvent: ComponentActivity(), DatePickerDialog.OnDateSetListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseFirestore
+    private val calendar = Calendar.getInstance()
+    private val calendarFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
 
 
     @SuppressLint("MissingInflatedId")
@@ -35,7 +42,7 @@ class AddEvent: ComponentActivity() {
         var TitleName = findViewById<EditText>(R.id.TitleName)
         var Desc = findViewById<EditText>(R.id.Description)
         var LastDay = findViewById<TextView>(R.id.LastDay)
-        var Date = findViewById<EditText>(R.id.Date)
+        var Date = findViewById<TextView>(R.id.Date)
         var Location = findViewById<EditText>(R.id.Location)
         var AddEventButton = findViewById<Button>(R.id.AddEventButton)
         var BackButton = findViewById<Button>(R.id.BackButton)
@@ -53,6 +60,16 @@ class AddEvent: ComponentActivity() {
             finish()
         }
 
+        Date.setOnClickListener{
+            DatePickerDialog(
+                this,
+                this,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+                ).show()
+        }
+
         AddEventButton.setOnClickListener{
             var EventName: String?=null
             var EventDesc: String?=null
@@ -62,6 +79,7 @@ class AddEvent: ComponentActivity() {
 
             EventName = TitleName.text.toString()
             EventDesc = Desc.text.toString()
+//            CHANGE BELOW LINE TO TIMESTAMP
             EventDate = Date.text.toString()
             EventLocation = Location.text.toString()
 
@@ -92,5 +110,26 @@ class AddEvent: ComponentActivity() {
             }
         }
 
+    }
+
+    //NOT FINISHED FIX THIS RN
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        val currentDate = calendarFormat.format(System.currentTimeMillis())
+        Log.e("Current Date", "$currentDate" )
+        Log.e("Calendar", "$month/$dayOfMonth/$year")
+
+        if(calendarFormat.format(calendar.timeInMillis) < currentDate){
+            Toast.makeText(this@AddEvent, "Date is invalid", Toast.LENGTH_SHORT).show()
+            Log.e("Invalid Date:", "$month/$dayOfMonth/$year is before $currentDate")
+        }else {
+
+            calendar.set(year, month, dayOfMonth)
+            displayFormattedDate(calendar.timeInMillis)
+        }
+    }
+
+    private fun displayFormattedDate(timestamp: Long){
+        findViewById<TextView>(R.id.Date).text = calendarFormat.format(timestamp)
+        Log.i("Format time to epoch: ", timestamp.toString())
     }
 }
