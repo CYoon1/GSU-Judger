@@ -32,7 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Person Name" />
+            android:text="Person Name"
+            android:textSize="19sp" />
 
     </LinearLayout>
 
@@ -53,13 +54,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Project Description" />
+            android:text="Project Description"
+            android:textSize="19sp" />
 
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="85dp"
+            android:layout_marginTop="187dp"
+            android:progressTint="#FFFFFF"
+            android:progressBackgroundTint="#0033A0"
+            android:secondaryProgressTint="#CE142D"
+            android:layout_marginEnd="86dp"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:theme="@style/Widget.AppCompat.RatingBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/BackButton"
@@ -75,18 +94,23 @@
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/RateProject"
+            android:id="@+id/ratingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rate Project"
+            android:layout_marginStart="158dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="165dp"
+            android:layout_marginBottom="289dp"
+            android:backgroundTint="#0033A0"
+            android:text="Submit Rating"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.944"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.965"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 </LinearLayout>

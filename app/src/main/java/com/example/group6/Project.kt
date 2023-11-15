@@ -5,5 +5,6 @@ data class Project(
     var description: String ?=null,
     val userName: String ?=null,
     var userID: String ?=null,
-    var projectID: String ?=null
+    var projectID: String ?=null,
+    var eventID: String ?=null
 )

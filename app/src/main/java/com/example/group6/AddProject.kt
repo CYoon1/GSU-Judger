@@ -29,6 +29,8 @@ class AddProject : ComponentActivity(){
         val uuid = curUser?.uid
 
         subBtn.setOnClickListener{
+            var bundle: Bundle? = intent.extras
+            var idEvent = bundle?.getString("GetEventID")
             val projectName = projName.text.toString()
             val projectDesc = projDesc.text.toString()
             val projectUser = projUser.text.toString()
@@ -39,7 +41,8 @@ class AddProject : ComponentActivity(){
                 "description" to projectDesc,
                 "userName" to projectUser,
                 "userID" to userUid,
-                "projID" to projID.id
+                "projID" to projID.id,
+                "eventID" to idEvent
             )
 
             projID.set(projMap)

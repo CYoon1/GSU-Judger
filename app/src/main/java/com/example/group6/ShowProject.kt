@@ -19,7 +19,7 @@ class ShowProject: ComponentActivity() {
         var PersonName = findViewById<TextView>(R.id.PersonName)
         var ProjectDesc = findViewById<TextView>(R.id.ProjectDesc)
         var BackButton = findViewById<Button>(R.id.BackButton)
-        var RateProject = findViewById<Button>(R.id.RateProject)
+        var RateButton = findViewById<Button>(R.id.ratingButton)
 
         var bundle: Bundle? = intent.extras
         var ProjectNameExtra = bundle!!.getString("ShowProjectName")
@@ -34,6 +34,9 @@ class ShowProject: ComponentActivity() {
             val intent = Intent(applicationContext, EventListener::class.java)
             startActivity(intent)
             finish()
+        }
+        RateButton.setOnClickListener{
+
         }
     }
 }

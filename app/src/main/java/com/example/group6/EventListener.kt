@@ -90,12 +90,14 @@ class EventListener: AppCompatActivity(), RecyclerViewInterface {
         var getDesc = index.EventDesc
         var getLocation = index.EventLocation
         var getDate = index.EventDate
+        var getID = index.EventID
 
         val intent = Intent(applicationContext, ShowEvent::class.java)
         intent.putExtra("ShowEventName", getName)
         intent.putExtra("ShowEventDesc", getDesc)
         intent.putExtra("ShowEventDate", getDate)
         intent.putExtra("ShowEventLocation", getLocation)
+        intent.putExtra("ShowEventID", getID)
         startActivity(intent)
         finish()
 

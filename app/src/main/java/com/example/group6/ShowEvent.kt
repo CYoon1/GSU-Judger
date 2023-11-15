@@ -38,6 +38,7 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
         var EventDescExtra = bundle.getString("ShowEventDesc")
         var EventDateExtra = bundle.getString("ShowEventDate")
         var EventLocationExtra = bundle.getString("ShowEventLocation")
+        var EventIDExtra = bundle.getString("ShowEventID")
 
 
         recyclerView = findViewById(R.id.ProjectRecyclerView)
@@ -64,6 +65,7 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
 
         AddProj.setOnClickListener{
             val intent = Intent(applicationContext, AddProject::class.java)
+            intent.putExtra("GetEventID", EventIDExtra)
             startActivity(intent)
             finish()
         }
