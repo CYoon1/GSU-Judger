@@ -99,7 +99,6 @@ class EventListener: AppCompatActivity(), RecyclerViewInterface {
         startActivity(intent)
         finish()
 
-//        Toast.makeText(this@EventListener, getName.toString(), Toast.LENGTH_SHORT).show()
     }
 
 

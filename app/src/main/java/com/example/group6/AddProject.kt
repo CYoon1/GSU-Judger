@@ -33,13 +33,16 @@ class AddProject : ComponentActivity(){
             val projectDesc = projDesc.text.toString()
             val projectUser = projUser.text.toString()
             val userUid = uuid.toString()
+            val projID = database.collection("Projects").document()
             val projMap = hashMapOf(
                 "name" to projectName,
                 "description" to projectDesc,
                 "userName" to projectUser,
-                "userID" to userUid
+                "userID" to userUid,
+                "projID" to projID.id
             )
-            database.collection("Projects").document().set(projMap)
+
+            projID.set(projMap)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Successfully added your project", Toast.LENGTH_SHORT).show()
                     val intent = Intent(applicationContext, EventListener::class.java)

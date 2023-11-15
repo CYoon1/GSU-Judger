@@ -83,17 +83,18 @@ class AddEvent: ComponentActivity(), DatePickerDialog.OnDateSetListener {
             EventDate = Date.text.toString()
             EventLocation = Location.text.toString()
 
+            val eventID = database.collection("EventsExample").document()
             val event = hashMapOf(
                 "EventName" to EventName,
                 "EventDate" to EventDate,
                 "EventLocation" to EventLocation,
-                "EventDesc" to EventDesc
+                "EventDesc" to EventDesc,
+                "EventID" to eventID.id
             )
-            database.collection("EventsExample")
-                .add(event)
+            eventID.set(event)
                 .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-//                    addDoc(documentReference, event)
+                    Log.d(TAG, "DocumentSnapshot added with ID: ${eventID}")
+                    Toast.makeText(this@AddEvent, "Successfully Created Event", Toast.LENGTH_SHORT).show()
                     val intent = Intent(applicationContext, EventListener::class.java)
                     startActivity(intent)
                     finish()
