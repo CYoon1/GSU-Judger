@@ -13,11 +13,13 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.toObject
 
 class ShowEvent: ComponentActivity(), RecyclerViewInterface {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var projectArrayList : ArrayList<Project>
+    private lateinit var projList : ArrayList<Project>
     private lateinit var ProjectAdapter: ProjectAdapter
     private lateinit var database : FirebaseFirestore
 
@@ -82,20 +84,24 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
         var getProjectName = index.name.toString()
         var getDesc = index.description
         var getUsername = index.userName
+        var getProjectID = index.projID
 
-        Log.e("GET", "Proj name is $getProjectName, Desc is $getDesc, Username is $getUsername")
+        Log.e("GET", "Proj name is $getProjectName, Desc is $getDesc, Username is $getUsername, Project ID is $getProjectID")
 
 
         val intent = Intent(applicationContext, ShowProject::class.java)
         intent.putExtra("ShowProjectName", getProjectName)
         intent.putExtra("ProjectDesc", getDesc)
         intent.putExtra("PersonName", getUsername)
+        intent.putExtra("projID", getProjectID)
         startActivity(intent)
         finish()
     }
 
     private fun ProjectChangeListener() {
         database = FirebaseFirestore.getInstance()
+        var bundle: Bundle? = intent.extras
+        var EventIDExtra = bundle?.getString("ShowEventID")
         database.collection("Projects").addSnapshotListener(object :
             com.google.firebase.firestore.EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
@@ -104,8 +110,10 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
                     return
                 }
                 for(dc : DocumentChange in value?.documentChanges!!){
-                    if(dc.type == DocumentChange.Type.ADDED){
+                    if(dc.type == DocumentChange.Type.ADDED) {
+                        if (dc.document.toObject(Project::class.java).eventID == EventIDExtra){
                         projectArrayList.add(dc.document.toObject(Project::class.java))
+                    }
                     }
                 }
                 ProjectAdapter.notifyDataSetChanged()
