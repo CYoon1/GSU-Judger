@@ -7,11 +7,12 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import android.widget.TextView
 import android.widget.Button
-
+import com.google.firebase.auth.FirebaseAuth
 
 class AddProject : ComponentActivity(){
     private lateinit var projName: EditText
     private lateinit var projDesc: EditText
+    private lateinit var projUser: EditText
     private lateinit var subBtn: Button
     private lateinit var backBtn: Button
     private var database = Firebase.firestore
@@ -21,15 +22,22 @@ class AddProject : ComponentActivity(){
         setContentView(R.layout.project_page)
         projName = findViewById(R.id.enterProj)
         projDesc = findViewById(R.id.enterDesc)
+        projUser = findViewById(R.id.enterName)
         subBtn = findViewById(R.id.submitProj)
         backBtn = findViewById(R.id.BackButton)
+        val curUser = FirebaseAuth.getInstance().currentUser
+        val uuid = curUser?.uid
 
         subBtn.setOnClickListener{
             val projectName = projName.text.toString()
             val projectDesc = projDesc.text.toString()
+            val projectUser = projUser.text.toString()
+            val userUid = uuid.toString()
             val projMap = hashMapOf(
                 "name" to projectName,
-                "description" to projectDesc
+                "description" to projectDesc,
+                "userName" to projectUser,
+                "userID" to userUid
             )
             database.collection("Projects").document().set(projMap)
                 .addOnSuccessListener {

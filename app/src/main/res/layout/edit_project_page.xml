@@ -14,7 +14,7 @@
         android:layout_marginStart="127dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="128dp"
-        android:text="Add Project"
+        android:text="Edit Project"
         android:textAlignment="center"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/enterName"
+        android:id="@+id/editName"
         android:layout_width="355dp"
         android:layout_height="49dp"
         android:layout_marginStart="24dp"
@@ -32,14 +32,14 @@
         android:ems="10"
         android:hint="Your Name"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/enterProj"
+        app:layout_constraintBottom_toTopOf="@+id/editProj"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addProj" />
 
     <EditText
-        android:id="@+id/enterProj"
+        android:id="@+id/editProj"
         android:layout_width="355dp"
         android:layout_height="49dp"
         android:layout_marginStart="24dp"
@@ -51,10 +51,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterName" />
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
 
     <EditText
-        android:id="@+id/enterDesc"
+        android:id="@+id/editDesc"
         android:layout_width="348dp"
         android:layout_height="69dp"
         android:layout_marginStart="24dp"
@@ -85,7 +85,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterProj" />
+        app:layout_constraintTop_toBottomOf="@+id/editProj" />
 
     <Button
         android:id="@+id/submitProj"
@@ -96,7 +96,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterDesc"
+        app:layout_constraintTop_toBottomOf="@+id/editDesc"
         app:layout_constraintVertical_bias="0.955" />
 
     <Button
