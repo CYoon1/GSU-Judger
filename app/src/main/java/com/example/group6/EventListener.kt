@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.DocumentChange
+import android.util.Log
 
 
 class EventListener: AppCompatActivity(), RecyclerViewInterface {
@@ -43,18 +44,21 @@ class EventListener: AppCompatActivity(), RecyclerViewInterface {
             finish()
         }
 
+        //Goes to Add Event Page
         AddEventButton.setOnClickListener{
             val intent = Intent(applicationContext, AddEvent::class.java)
             startActivity(intent)
             finish()
         }
 
+        //Logout
         LogOutButton.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(applicationContext, Login::class.java)
             startActivity(intent)
             finish()
         }
+
         recyclerView = findViewById(R.id.EventRecycler)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
@@ -64,6 +68,20 @@ class EventListener: AppCompatActivity(), RecyclerViewInterface {
         recyclerView.adapter = eventAdapter
 
         EventChangeListener()
+
+
+        database.collection("EventsExample")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("Document ID: ", "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Fail", "Error getting documents: ", exception)
+            }
+
+
     }
 
     override fun onEventClicked(position: Int) {
@@ -84,6 +102,8 @@ class EventListener: AppCompatActivity(), RecyclerViewInterface {
 //        Toast.makeText(this@EventListener, getName.toString(), Toast.LENGTH_SHORT).show()
     }
 
+
+//Gets Database
     private fun EventChangeListener(){
         database = FirebaseFirestore.getInstance()
         database.collection("EventsExample")

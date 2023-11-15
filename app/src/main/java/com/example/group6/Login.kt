@@ -85,7 +85,10 @@ class Login: ComponentActivity() {
                         // Sign in success, update UI with the signed-in user's information
                     } else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT,).show()
+                        Toast.makeText(baseContext, "Login failed.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(applicationContext, Login::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                 }
 

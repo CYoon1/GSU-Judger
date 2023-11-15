@@ -93,6 +93,7 @@ class AddEvent: ComponentActivity(), DatePickerDialog.OnDateSetListener {
                 .add(event)
                 .addOnSuccessListener { documentReference ->
                     Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+//                    addDoc(documentReference, event)
                     val intent = Intent(applicationContext, EventListener::class.java)
                     startActivity(intent)
                     finish()
