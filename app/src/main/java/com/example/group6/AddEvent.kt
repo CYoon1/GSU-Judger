@@ -116,19 +116,31 @@ class AddEvent: ComponentActivity(), DatePickerDialog.OnDateSetListener {
 
     //NOT FINISHED FIX THIS RN
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        val currentDate = calendarFormat.format(System.currentTimeMillis())
-        Log.e("Current Date", "$currentDate" )
-        Log.e("Calendar", "$month/$dayOfMonth/$year")
+        val currentDateCalendar = Calendar.getInstance()
+        currentDateCalendar.set(Calendar.HOUR_OF_DAY, 0)
+        currentDateCalendar.set(Calendar.MINUTE, 0)
+        currentDateCalendar.set(Calendar.SECOND, 0)
+        currentDateCalendar.set(Calendar.MILLISECOND, 0)
 
-        if(calendarFormat.format(calendar.timeInMillis) < currentDate){
+        val selectedDateCalendar = Calendar.getInstance()
+        selectedDateCalendar.set(year, month, dayOfMonth)
+        selectedDateCalendar.set(Calendar.HOUR_OF_DAY, 0)
+        selectedDateCalendar.set(Calendar.MINUTE, 0)
+        selectedDateCalendar.set(Calendar.SECOND, 0)
+        selectedDateCalendar.set(Calendar.MILLISECOND, 0)
+
+        Log.e("Current Date", calendarFormat.format(currentDateCalendar.timeInMillis))
+        Log.e("Selected Date", "$month/$dayOfMonth/$year")
+
+        if (selectedDateCalendar.timeInMillis < currentDateCalendar.timeInMillis) {
             Toast.makeText(this@AddEvent, "Date is invalid", Toast.LENGTH_SHORT).show()
-            Log.e("Invalid Date:", "$month/$dayOfMonth/$year is before $currentDate")
-        }else {
-
+            Log.e("Invalid Date:", "$month/$dayOfMonth/$year is before current date")
+        } else {
             calendar.set(year, month, dayOfMonth)
             displayFormattedDate(calendar.timeInMillis)
         }
     }
+
 
     private fun displayFormattedDate(timestamp: Long){
         findViewById<TextView>(R.id.Date).text = calendarFormat.format(timestamp)
