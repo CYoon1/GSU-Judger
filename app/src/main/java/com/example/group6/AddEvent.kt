@@ -42,7 +42,7 @@ class AddEvent: ComponentActivity(), DatePickerDialog.OnDateSetListener {
         var TitleName = findViewById<EditText>(R.id.TitleName)
         var Desc = findViewById<EditText>(R.id.Description)
         var LastDay = findViewById<TextView>(R.id.LastDay)
-        var Date = findViewById<TextView>(R.id.Date)
+        var Date = findViewById<Button>(R.id.Date)
         var Location = findViewById<EditText>(R.id.Location)
         var AddEventButton = findViewById<Button>(R.id.AddEventButton)
         var BackButton = findViewById<Button>(R.id.BackButton)
