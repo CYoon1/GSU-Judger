@@ -1,5 +1,5 @@
 package com.example.group6
-import android.annotation.SuppressLint
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +22,13 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
     private lateinit var projList : ArrayList<Project>
     private lateinit var ProjectAdapter: ProjectAdapter
     private lateinit var database : FirebaseFirestore
+
+    //FOR GOING BACK TO EVENT PAGE
+    private var EventNameBack: String? = null
+    private var EventDescBack: String? = null
+    private var EventDateBack: String? = null
+    private var EventLocationBack: String? = null
+    private var EventIDBack: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +65,15 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
         EventDate.text = EventDateExtra
         EventLocation.text = EventLocationExtra
 
+        EventNameBack = EventNameExtra
+        EventDescBack = EventDescExtra
+        EventDateBack = EventDateExtra
+        EventLocationBack = EventLocationExtra
+        EventIDBack = EventIDExtra
+
+        Log.e("GetEventName", "eventName to back is $EventNameBack")
+
+
 
         BackButton.setOnClickListener{
             val intent = Intent(applicationContext, EventListener::class.java)
@@ -67,7 +83,15 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
 
         AddProj.setOnClickListener{
             val intent = Intent(applicationContext, AddProject::class.java)
+
+            intent.putExtra("ShowEventName", EventNameBack)
+            intent.putExtra("ShowEventDesc", EventDescBack)
+            intent.putExtra("ShowEventDate", EventDateBack)
+            intent.putExtra("ShowEventLocation", EventLocationBack)
+            intent.putExtra("ShowEventID", EventIDBack)
             intent.putExtra("GetEventID", EventIDExtra)
+            Log.e("GetEventName", "FROM SHOWEVENT TO ADDPROJECT Event Name is $EventNameBack")
+
             startActivity(intent)
             finish()
         }
@@ -78,8 +102,6 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
         Toast.makeText(this@ShowEvent, "hi", Toast.LENGTH_SHORT).show()
 
         var index = projectArrayList.get(position)
-
-//        Log.e("Index", "Index is $index")
 
         var getProjectName = index.name.toString()
         var getDesc = index.description
@@ -94,6 +116,15 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
         intent.putExtra("ProjectDesc", getDesc)
         intent.putExtra("PersonName", getUsername)
         intent.putExtra("projID", getProjectID)
+
+        intent.putExtra("ShowEventName", EventNameBack)
+        intent.putExtra("ShowEventDesc", EventDescBack)
+        intent.putExtra("ShowEventDate", EventDateBack)
+        intent.putExtra("ShowEventLocation", EventLocationBack)
+        intent.putExtra("ShowEventID", EventIDBack)
+
+        Log.e("GetEventName", "FROM SHOWEVENT TO SHOWPROJECT Event Name is $EventNameBack")
+
         startActivity(intent)
         finish()
     }

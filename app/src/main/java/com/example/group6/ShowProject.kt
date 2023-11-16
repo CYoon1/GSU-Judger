@@ -18,6 +18,13 @@ import kotlinx.coroutines.awaitAll
 
 class ShowProject: ComponentActivity() {
 
+    //FOR GOING BACK TO EVENT PAGE
+    private var EventNameBack: String? = null
+    private var EventDescBack: String? = null
+    private var EventDateBack: String? = null
+    private var EventLocationBack: String? = null
+    private var EventIDBack: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,8 +49,30 @@ class ShowProject: ComponentActivity() {
         PersonName.text = PersonNameExtra
         ProjectDesc.text = ProjectDescExtra
 
+
+        //FOR GOING BACK TO EVENT PAGE
+        EventNameBack = bundle!!.getString("ShowEventName")
+        EventDescBack = bundle.getString("ShowEventDesc")
+        EventDateBack = bundle.getString("ShowEventDate")
+        EventLocationBack = bundle.getString("ShowEventLocation")
+        EventIDBack = bundle.getString("ShowEventID")
+
+
+        Log.e("GetEventName", "IN SHOWPROJECT Event Name is $EventNameBack")
+
+
         BackButton.setOnClickListener{
-            val intent = Intent(applicationContext, EventListener::class.java)
+            val intent = Intent(applicationContext, ShowEvent::class.java)
+
+            intent.putExtra("ShowEventName", EventNameBack)
+            intent.putExtra("ShowEventDesc", EventDescBack)
+            intent.putExtra("ShowEventDate", EventDateBack)
+            intent.putExtra("ShowEventLocation", EventLocationBack)
+            intent.putExtra("ShowEventID", EventIDBack)
+
+            Log.e("GetEventName", "FROM SHOWPROJECT TO SHOWEVENT Event Name is $EventNameBack")
+
+
             startActivity(intent)
             finish()
         }
@@ -61,29 +90,21 @@ class ShowProject: ComponentActivity() {
             rateRef.set(rater)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Successfully added your rating", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(applicationContext, EventListener::class.java)
+                    val intent = Intent(applicationContext, ShowEvent::class.java)
+
+                    intent.putExtra("ShowEventName", EventNameBack)
+                    intent.putExtra("ShowEventDesc", EventDescBack)
+                    intent.putExtra("ShowEventDate", EventDateBack)
+                    intent.putExtra("ShowEventLocation", EventLocationBack)
+                    intent.putExtra("ShowEventID", EventIDBack)
+
+                    Log.e("GetEventName", "RATED PROJECT, SHOWPROJECT TO SHOWEVENT Event Name is $EventNameBack")
                     startActivity(intent)
                     finish()
-                    //projName.text.clear()
-                    //projDesc.text.clear()
                 }
                 .addOnFailureListener{
                     Toast.makeText(this, "Failed to added your rating", Toast.LENGTH_SHORT).show()
                 }
-//            var counter = 0
-//            val query = database.collection("Projects").document(projID).collection("ratings")
-//            val countQuery = query.count()
-//            countQuery.get(AggregateSource.SERVER).addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    // Count fetched successfully
-//                    val snapshot = task.result
-//                    Log.d("BANANA", "Count: ${snapshot.count}")
-//                    var counter = snapshot.count.toInt()
-//                } else {
-//                    Log.d("whomp whomp", "Count failed: ", task.getException())
-//                }
-//            }
-//            Log.d("work", "Number of docus: $counter")
         }
     }
 }
