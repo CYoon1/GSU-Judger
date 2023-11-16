@@ -91,30 +91,37 @@ class AddEvent: ComponentActivity(), DatePickerDialog.OnDateSetListener {
                 "EventDesc" to EventDesc,
                 "EventID" to eventID.id
             )
-            eventID.set(event)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: ${eventID}")
-                    Toast.makeText(this@AddEvent, "Successfully Created Event", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(applicationContext, EventListener::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                }
-
             if (TextUtils.isEmpty(EventName)){
                 Toast.makeText(this@AddEvent, "Title is empty", Toast.LENGTH_SHORT).show()
+
+            }else if (TextUtils.isEmpty(EventDate)){
+                Toast.makeText(this@AddEvent, "Date is empty", Toast.LENGTH_SHORT).show()
+
+            }else if (TextUtils.isEmpty(EventLocation)){
+                Toast.makeText(this@AddEvent, "Location is empty", Toast.LENGTH_SHORT).show()
+
+            }else if (TextUtils.isEmpty(EventDesc)) {
+                Toast.makeText(this@AddEvent, "Description is empty", Toast.LENGTH_SHORT).show()
+
+            }else{
+                eventID.set(event)
+                    .addOnSuccessListener { documentReference ->
+                        Log.d(TAG, "DocumentSnapshot added with ID: ${eventID}")
+                        Toast.makeText(this@AddEvent, "Successfully Created Event", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(applicationContext, EventListener::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error adding document", e)
+                    }
             }
 
-            if (TextUtils.isEmpty(EventDate)){
-                Toast.makeText(this@AddEvent, "Date is empty", Toast.LENGTH_SHORT).show()
-            }
+
         }
 
     }
 
-    //NOT FINISHED FIX THIS RN
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val currentDateCalendar = Calendar.getInstance()
         currentDateCalendar.set(Calendar.HOUR_OF_DAY, 0)

@@ -1,6 +1,7 @@
 package com.example.group6
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.widget.*
 import androidx.activity.ComponentActivity
@@ -66,27 +67,44 @@ class AddProject : ComponentActivity(){
                 "eventID" to idEvent
             )
 
-            projID.set(projMap)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Successfully added your project", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(applicationContext, ShowEvent::class.java)
+            if (TextUtils.isEmpty(projectName)){
+                Toast.makeText(this@AddProject, "Project Name is empty", Toast.LENGTH_SHORT).show()
 
-                    intent.putExtra("ShowEventName", EventNameBack)
-                    intent.putExtra("ShowEventDesc", EventDescBack)
-                    intent.putExtra("ShowEventDate", EventDateBack)
-                    intent.putExtra("ShowEventLocation", EventLocationBack)
-                    intent.putExtra("ShowEventID", EventIDBack)
+            }else if (TextUtils.isEmpty(projectUser)){
+                Toast.makeText(this@AddProject, "Name is empty", Toast.LENGTH_SHORT).show()
 
-                    Log.e("GetEventName", "SUBMITTED PROJECT, FROM ADDPROJECT TO SHOWEVENT Event Name is $EventNameBack")
+            }else if (TextUtils.isEmpty(projectDesc)) {
+                Toast.makeText(this@AddProject, "Project description is empty", Toast.LENGTH_SHORT)
+                    .show()
+
+            }else {
+                projID.set(projMap)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Successfully added your project", Toast.LENGTH_SHORT)
+                            .show()
+                        val intent = Intent(applicationContext, ShowEvent::class.java)
+
+                        intent.putExtra("ShowEventName", EventNameBack)
+                        intent.putExtra("ShowEventDesc", EventDescBack)
+                        intent.putExtra("ShowEventDate", EventDateBack)
+                        intent.putExtra("ShowEventLocation", EventLocationBack)
+                        intent.putExtra("ShowEventID", EventIDBack)
+
+                        Log.e(
+                            "GetEventName",
+                            "SUBMITTED PROJECT, FROM ADDPROJECT TO SHOWEVENT Event Name is $EventNameBack"
+                        )
 
 
-                    startActivity(intent)
-                    finish()
+                        startActivity(intent)
+                        finish()
 
-                }
-                .addOnFailureListener{
-                    Toast.makeText(this, "Failed to added your project", Toast.LENGTH_SHORT).show()
-                }
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Failed to added your project", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+            }
         }
 
         backBtn.setOnClickListener{
