@@ -94,7 +94,7 @@ class ShowProject: ComponentActivity() {
                     Toast.makeText(this, "Successfully added your rating", Toast.LENGTH_SHORT)
                         .show()
                     val intent = Intent(applicationContext, ShowEvent::class.java)
-
+                    intent.putExtra("projID", projID)
                     intent.putExtra("ShowEventName", EventNameBack)
                     intent.putExtra("ShowEventDesc", EventDescBack)
                     intent.putExtra("ShowEventDate", EventDateBack)
@@ -119,7 +119,12 @@ class ShowProject: ComponentActivity() {
             val uuid = curUser?.uid
             if (uuid == userID) {
                 val intent = Intent(applicationContext, EditProject::class.java)
-                intent.putExtra("projID", projID)
+                intent.putExtra("projectID", projectIDextra)
+                intent.putExtra("studName", PersonNameExtra)
+                intent.putExtra("projName", ProjectNameExtra)
+                intent.putExtra("projDesc", ProjectDescExtra)
+                intent.putExtra("studID", userID)
+                intent.putExtra("evID", EventIDBack)
                 startActivity(intent)
                 finish()
             }
