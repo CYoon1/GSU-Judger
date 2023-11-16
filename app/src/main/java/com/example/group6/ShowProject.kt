@@ -12,6 +12,9 @@ import androidx.activity.ComponentActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.AggregateSource
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.awaitAll
@@ -51,6 +54,8 @@ class ShowProject: ComponentActivity() {
         PersonName.text = PersonNameExtra
         ProjectDesc.text = ProjectDescExtra
 
+        Log.e("projID", "projID is $projectIDextra")
+
 
         //FOR GOING BACK TO EVENT PAGE
         EventNameBack = bundle!!.getString("ShowEventName")
@@ -89,6 +94,18 @@ class ShowProject: ComponentActivity() {
                 "projID" to projID,
                 "stars" to rating
             )
+
+            database.collection("Ratings")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        Log.d("Document ID: ", "${document.id} => ${document.data}")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("Fail", "Error getting documents: ", exception)
+                }
+
             rateRef.set(rater)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Successfully added your rating", Toast.LENGTH_SHORT)
@@ -117,6 +134,8 @@ class ShowProject: ComponentActivity() {
             val userID = projectUserExtra.toString()
             val curUser = FirebaseAuth.getInstance().currentUser
             val uuid = curUser?.uid
+            Log.e("uuid", "user ID rn is $uuid and for the project is $userID")
+
             if (uuid == userID) {
                 val intent = Intent(applicationContext, EditProject::class.java)
                 intent.putExtra("projectID", projectIDextra)
@@ -125,9 +144,26 @@ class ShowProject: ComponentActivity() {
                 intent.putExtra("projDesc", ProjectDescExtra)
                 intent.putExtra("studID", userID)
                 intent.putExtra("evID", EventIDBack)
+
+                intent.putExtra("projID", projID)
+                intent.putExtra("ShowEventName", EventNameBack)
+                intent.putExtra("ShowEventDesc", EventDescBack)
+                intent.putExtra("ShowEventDate", EventDateBack)
+                intent.putExtra("ShowEventLocation", EventLocationBack)
+                intent.putExtra("ShowEventID", EventIDBack)
+
+                Log.e("projectName", "IN SHOWPROJECT project Name is $ProjectNameExtra")
+                Log.e("GetEventName", "SHOWPROJECT TO EDITPROJECT Event Name is $EventNameBack")
+
                 startActivity(intent)
                 finish()
+            }else{
+                Toast.makeText(this, "This is not your project", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun AlreadyVoted(){
+        Toast.makeText(this, "Failed to added your rating", Toast.LENGTH_SHORT).show()
     }
 }

@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.auth.ktx.auth
 import android.content.Intent
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -54,43 +55,38 @@ class Login: ComponentActivity() {
         }
 
         LoginButton.setOnClickListener{
+
             ProgressBar.visibility = View.VISIBLE
             var email: String? = null
             var password: String? = null
             email = EnterEmail.text.toString()
             password = EnterPassword.text.toString()
+            try {
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        ProgressBar.visibility = View.GONE
 
-            if (TextUtils.isEmpty(email)){
-                Toast.makeText(this@Login, "Email is empty", Toast.LENGTH_SHORT).show()
-                val intent = Intent(applicationContext, Login::class.java)
-                startActivity(intent)
-            }
+                        if (task.isSuccessful) {
 
-            if (TextUtils.isEmpty(password)){
-                Toast.makeText(this@Login, "Password is empty", Toast.LENGTH_SHORT).show()
-                val intent = Intent(applicationContext, Login::class.java)
-                startActivity(intent)
-            }
-
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    ProgressBar.visibility = View.GONE
-
-                    if (task.isSuccessful) {
-
-                        Toast.makeText(this@Login, "Login success.", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(applicationContext, EventListener::class.java)
-                        startActivity(intent)
-                        finish()
-                        // Sign in success, update UI with the signed-in user's information
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(baseContext, "Login failed.", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(applicationContext, Login::class.java)
-                        startActivity(intent)
-                        finish()
+                            Toast.makeText(this@Login, "Login success.", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(applicationContext, EventListener::class.java)
+                            startActivity(intent)
+                            finish()
+                            // Sign in success, update UI with the signed-in user's information
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            ProgressBar.visibility = View.GONE
+                            Toast.makeText(baseContext, "Login failed.", Toast.LENGTH_SHORT).show()
+//                            val intent = Intent(applicationContext, Login::class.java)
+//                            startActivity(intent)
+//                            finish()
+                        }
                     }
-                }
+            }catch(e: Exception){
+                ProgressBar.visibility = View.GONE
+                Toast.makeText(this, "One or more fields are empty", Toast.LENGTH_SHORT).show()
+                Log.e("CATCH EXCEPTION", "CAUGHT THE EXCEPTION $e")
+            }
 
         }
 

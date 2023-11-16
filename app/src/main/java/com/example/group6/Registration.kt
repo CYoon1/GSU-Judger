@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.auth.ktx.auth
 import android.content.Intent
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -61,38 +62,35 @@ class Registration: ComponentActivity() {
                 var password: String? = null
                 email = EnterEmail.text.toString()
                 password = EnterPassword.text.toString()
-
-                if (TextUtils.isEmpty(email)){
-                    Toast.makeText(this@Registration, "Email is empty", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(applicationContext, Registration::class.java)
-                    startActivity(intent)
-
-                }
-
-                if (TextUtils.isEmpty(password)){
-                    Toast.makeText(this@Registration, "Password is empty", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(applicationContext, Registration::class.java)
-                    startActivity(intent)
-                }
+            try {
 
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         ProgressBar.visibility = View.GONE
                         if (task.isSuccessful) {
-                            Toast.makeText(this@Registration, "Account created.", Toast.LENGTH_SHORT).show()
-//                            val user = auth.currentUser
-//                            updateUI(user)
+                            Toast.makeText(
+                                this@Registration,
+                                "Account created.",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
                             val intent = Intent(applicationContext, EventListener::class.java)
                             startActivity(intent)
                             finish()
 
                         } else {
-                            Toast.makeText(this@Registration, "Authentication failed.", Toast.LENGTH_SHORT,).show()
-//                            updateUI(null)
+                            Toast.makeText(
+                                this@Registration,
+                                "Authentication failed.",
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         }
                     }
-
+            }catch(e: Exception){
+                ProgressBar.visibility = View.GONE
+                Toast.makeText(this, "One or more fields are empty", Toast.LENGTH_SHORT).show()
+                Log.e("CATCH EXCEPTION", "CAUGHT THE EXCEPTION $e")
+            }
         }
 
     }

@@ -14,6 +14,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.toObject
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class ShowEvent: ComponentActivity(), RecyclerViewInterface {
 
@@ -29,6 +32,10 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
     private var EventDateBack: String? = null
     private var EventLocationBack: String? = null
     private var EventIDBack: String? = null
+
+    //CALENDAR
+    private val calendar = Calendar.getInstance()
+    private val calendarFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,25 +89,38 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
         }
 
         AddProj.setOnClickListener{
-            val intent = Intent(applicationContext, AddProject::class.java)
+            val currentDateCalendar = Calendar.getInstance()
+            currentDateCalendar.set(Calendar.HOUR_OF_DAY, 0)
+            currentDateCalendar.set(Calendar.MINUTE, 0)
+            currentDateCalendar.set(Calendar.SECOND, 0)
+            currentDateCalendar.set(Calendar.MILLISECOND, 0)
 
-            intent.putExtra("ShowEventName", EventNameBack)
-            intent.putExtra("ShowEventDesc", EventDescBack)
-            intent.putExtra("ShowEventDate", EventDateBack)
-            intent.putExtra("ShowEventLocation", EventLocationBack)
-            intent.putExtra("ShowEventID", EventIDBack)
-            intent.putExtra("GetEventID", EventIDExtra)
-            Log.e("GetEventName", "FROM SHOWEVENT TO ADDPROJECT Event Name is $EventNameBack")
+            val getDateCalendar = Calendar.getInstance()
 
-            startActivity(intent)
-            finish()
+            Log.e("Time", "Time is ${currentDateCalendar.timeInMillis}, Event time is $EventDate")
+
+//            if((currentDateCalendar.timeInMillis).toString() > EventDate.toString()){
+//                Toast.makeText(this, "Due date is past current date", Toast.LENGTH_SHORT)
+//
+//            }else {
+                val intent = Intent(applicationContext, AddProject::class.java)
+
+                intent.putExtra("ShowEventName", EventNameBack)
+                intent.putExtra("ShowEventDesc", EventDescBack)
+                intent.putExtra("ShowEventDate", EventDateBack)
+                intent.putExtra("ShowEventLocation", EventLocationBack)
+                intent.putExtra("ShowEventID", EventIDBack)
+                intent.putExtra("GetEventID", EventIDExtra)
+                Log.e("GetEventName", "FROM SHOWEVENT TO ADDPROJECT Event Name is $EventNameBack")
+
+                startActivity(intent)
+                finish()
+//            }
         }
 
     }
 
     override fun onEventClicked(position: Int) {
-        Toast.makeText(this@ShowEvent, "hi", Toast.LENGTH_SHORT).show()
-
         var index = projectArrayList.get(position)
 
         var getProjectName = index.name.toString()
