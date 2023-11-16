@@ -38,12 +38,14 @@ class ShowProject: ComponentActivity() {
         var BackButton = findViewById<Button>(R.id.BackButton)
         var RateButton = findViewById<Button>(R.id.ratingButton)
         var Ratebar = findViewById<RatingBar>(R.id.ratingBar)
+        var editButton = findViewById<Button>(R.id.EditProject)
 
         var bundle: Bundle? = intent.extras
         var ProjectNameExtra = bundle!!.getString("ShowProjectName")
         var PersonNameExtra = bundle.getString("PersonName")
         var ProjectDescExtra = bundle.getString("ProjectDesc")
         var projectIDextra = bundle.getString("projID")
+        var projectUserExtra = bundle.getString("userID")
         val projID = projectIDextra.toString()
         ProjectName.text = ProjectNameExtra
         PersonName.text = PersonNameExtra
@@ -61,7 +63,7 @@ class ShowProject: ComponentActivity() {
         Log.e("GetEventName", "IN SHOWPROJECT Event Name is $EventNameBack")
 
 
-        BackButton.setOnClickListener{
+        BackButton.setOnClickListener {
             val intent = Intent(applicationContext, ShowEvent::class.java)
 
             intent.putExtra("ShowEventName", EventNameBack)
@@ -76,7 +78,7 @@ class ShowProject: ComponentActivity() {
             startActivity(intent)
             finish()
         }
-        RateButton.setOnClickListener{
+        RateButton.setOnClickListener {
             val rateRef = database.collection("Ratings").document()
             val rating = Ratebar.rating.toInt()
             val curUser = FirebaseAuth.getInstance().currentUser
@@ -89,7 +91,8 @@ class ShowProject: ComponentActivity() {
             )
             rateRef.set(rater)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Successfully added your rating", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Successfully added your rating", Toast.LENGTH_SHORT)
+                        .show()
                     val intent = Intent(applicationContext, ShowEvent::class.java)
 
                     intent.putExtra("ShowEventName", EventNameBack)
@@ -98,13 +101,28 @@ class ShowProject: ComponentActivity() {
                     intent.putExtra("ShowEventLocation", EventLocationBack)
                     intent.putExtra("ShowEventID", EventIDBack)
 
-                    Log.e("GetEventName", "RATED PROJECT, SHOWPROJECT TO SHOWEVENT Event Name is $EventNameBack")
+                    Log.e(
+                        "GetEventName",
+                        "RATED PROJECT, SHOWPROJECT TO SHOWEVENT Event Name is $EventNameBack"
+                    )
                     startActivity(intent)
                     finish()
                 }
-                .addOnFailureListener{
+                .addOnFailureListener {
                     Toast.makeText(this, "Failed to added your rating", Toast.LENGTH_SHORT).show()
                 }
+        }
+        editButton.setOnClickListener {
+            val projID = projectIDextra.toString()
+            val userID = projectUserExtra.toString()
+            val curUser = FirebaseAuth.getInstance().currentUser
+            val uuid = curUser?.uid
+            if (uuid == userID) {
+                val intent = Intent(applicationContext, EditProject::class.java)
+                intent.putExtra("projID", projID)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 }

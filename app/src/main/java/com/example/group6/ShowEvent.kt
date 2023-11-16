@@ -107,6 +107,7 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
         var getDesc = index.description
         var getUsername = index.userName
         var getProjectID = index.projID
+        var getUserID = index.userID
 
         Log.e("GET", "Proj name is $getProjectName, Desc is $getDesc, Username is $getUsername, Project ID is $getProjectID")
 
@@ -116,6 +117,7 @@ class ShowEvent: ComponentActivity(), RecyclerViewInterface {
         intent.putExtra("ProjectDesc", getDesc)
         intent.putExtra("PersonName", getUsername)
         intent.putExtra("projID", getProjectID)
+        intent.putExtra("userID", getUserID)
 
         intent.putExtra("ShowEventName", EventNameBack)
         intent.putExtra("ShowEventDesc", EventDescBack)

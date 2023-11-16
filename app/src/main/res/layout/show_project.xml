@@ -109,6 +109,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
+        <Button
+            android:id="@+id/EditProject"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/button"
+            android:text="edit project"
+            android:textColor="@color/white"
+            android:textSize="12.5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.955"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.962" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
